@@ -1,0 +1,181 @@
+\documentclass{article}
+\usepackage{amsmath,accents}%
+\usepackage{amsfonts}%
+\usepackage{amssymb}%
+\usepackage{comment}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{setspace}  
+\usepackage{amsthm}
+\usepackage{nccmath}
+\usepackage[UKenglish]{babel}
+\usepackage{multirow}
+\usepackage{enumerate}
+\theoremstyle{plain}
+
+\renewcommand{\baselinestretch}{1,4}
+\setlength{\oddsidemargin}{0.5in}
+\setlength{\evensidemargin}{0.5in}
+\setlength{\textwidth}{5.4in}
+\setlength{\topmargin}{-0.25in}
+\setlength{\headheight}{0.5in}
+\setlength{\headsep}{0.6in}
+\setlength{\textheight}{8in}
+\setlength{\footskip}{0.75in}
+
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{propi}[theorem]{Propiedades}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{coro}[theorem]{Corolario}
+\newtheorem{criterion}{Criterion}
+\newtheorem{defi}[theorem]{Definición}
+\newtheorem{example}[theorem]{Ejemplo}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{nota}[theorem]{Nota}
+\newtheorem{sol}{Solución}
+\newtheorem*{sol*}{Solution}
+\newtheorem{prop}[theorem]{Proposición}
+\newtheorem{remark}{Remark}
+
+\newtheorem{dem}[theorem]{Demostración}
+
+\newtheorem{summary}{Summary}
+
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\ninf}[1]{\norm{#1}_\infty}
+\providecommand{\numn}[1]{\norm{#1}_1}
+\providecommand{\gabs}[1]{\left|{#1}\right|}
+\newcommand{\bor}[1]{\mathcal{B}(#1)}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\X}{\chi}
+\providecommand{\Zn}[1]{\Z / \Z #1}
+\newcommand{\resi}{\varepsilon_L}
+\newcommand{\cee}{\mathbb{C}}
+\providecommand{\conv}[1]{\overset{#1}{\longrightarrow}}
+\providecommand{\gene}[1]{\langle{#1}\rangle}
+\providecommand{\convcs}{\xrightarrow{CS}}
+% xrightarrow{d}[d]
+\setcounter{exercise}{0}
+\newcommand{\cicl}{\mathcal{C}}
+
+\newenvironment{ejercicio}[2][Estado]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries Ejercicio}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%--------------------------------------------------------
+\begin{document}
+
+\title{Applied Bayesian Methods - Week 1 Exercises }
+\author{Javier Aguilar Martín}
+\date{\today}
+\maketitle
+\begin{exercise}
+A test to detect drunk drivers has probability of 0.8 of being correct
+(i.e. of providing a positive result when the level of alcohol in the
+driver's blood is truly over the acceptable limit, and of providing a
+negative results when the driver's blood alcohol level is truly below
+this limit). If this test is positive, a different test is then carried out.
+The second test always correctly detects if the driver is in fact \emph{not}
+drunk, but has a 10\% error rate with drunk drivers.
+If 20\% of drivers stopped by the police are actually drunk, calculate:
+
+\begin{enumerate}[(a)]
+\item the proportion of drivers stopped that have to be given the second
+test (i.e. the proportion of drivers testing positive on the first test);
+\item the probability that a driver testing positive on the first test really
+is drunk;
+\item the probability that a driver testing negative on the second test
+really is drunk.
+\end{enumerate}
+
+\end{exercise}
+\begin{sol*}
+Let $T_1$ the outcome of the first test (1 if positive, 0 otherwise) and $D$ the event of being drunk (1 if true, 0 otherwise). Similarly, $T_2$ is the outcome of the second test. By abuse of notation let $P(T_1)$ be the probability of $T_1$ being correct. With this notation we have the following probability data:
+
+\begin{itemize}
+\item $P(T_1 = 1\mid D = 1)=P(T_1 = 0\mid D = 0)=0.8$.%$P(T_1) = P(T_1 = 1\mid D = 1)+P(T_1 = 0\mid D = 0)=0.8$.
+
+\item $P(T_2 = 0\mid D = 0)= 1$.
+
+\item $P(T_2 = 0\mid D = 1)=0.1$.
+
+\item $P(D=1)=0.2$.
+\end{itemize}
+We will use the law of total probability and Bayes' theorem to compute the desired probabilities.
+\begin{enumerate}[(a)]
+\item We need to compute
+\begin{align*}
+P(T_1=1)&=P(T_1=1\mid D=1)P(D=1)+P(T_1=1\mid D=0)P(D=0)\\
+&=0.8\times 0.2 +  0.2\times 0.8 \\
+&= 0.32
+%&=P(T_1=1\mid D=1)\times 0.2+(1-P(T_1 = 0\mid D = 0))\times 0.8
+\end{align*}
+%%\begin{align*}
+%%P(T_1=1)&=P(T_1=1\mid T_1)P(T_1)+P(T_1=1\mid \neg T_1)P(\neg T_1)\\
+%%\end{align*}
+%%
+%%\begin{align*}
+%%P(T_1=1\mid T_1) = \frac{P(T_1\mid T_1=1)P(T_1=1)}{P(T_1)}
+%%\end{align*}
+%%
+%%$P(T_1=1) = P(D=1\cap T_1) + P(D=0\cap \neg T_1)$
+%%
+%%$P(D=1\cap T_1) = P(T_1\mid  D=1)P(D=1)+ (1-P(T_1\mid D=0))P(D=0)$
+
+\item We need to compute
+\[P(D = 1 \mid T_1=1)= \frac{P(T_1=1\mid D=1)P(D=1)}{P(T_1 = 1)}=\frac{0.8\times 0.2}{0.32}=0.5.\]
+\item We have to compute
+\begin{align*}
+P(D=1\mid T_2=0) &= \frac{P(T_2=0\mid D=1)P(D=1)}{P(T_2=0)}\\
+&=\frac{P(T_2=0\mid D=1)P(D=1)}{P(T_2=0\mid D=1)P(D=1)+P(T_2=0\mid D=0)P(D=0)}
+&=\frac{0.1\times 0.2}{0.1\times 0.2 + 1\times 0.8}\\
+&=0.024
+\end{align*}
+\end{enumerate}
+\end{sol*}
+
+
+\newpage
+\begin{exercise}
+Suppose you are investigating the long-term effects of exposure to low
+levels of lead in childhood on reading ability, and your prior distribution
+for the proportion of all such children having a reading ability below
+expected can be represented by a $\mathrm{Beta}(1, 1)$ distribution (i.e. a uniform
+prior distribution).
+
+Now you find a report saying that, in a study, some researchers have
+analysed children’s shed primary teeth for lead content, and they found
+that 29 children in the study had high lead content and, of these, 7 had
+a reading ability of well below that expected for their age.
+
+Based on all the information, of 10 more children found to have a high
+lead content in their teeth, what is your (predictive) probability that $\tilde{y}$ children will have lower than expected reading ability for their age?
+
+\emph{Hint: You will need to first evaluate the posterior distribution for the
+proportion of children with low reading ability, then obtain the predictive
+distribution. It may be useful to note that the normalising constant for
+a $\mathrm{Beta}(\alpha, \beta)$ distribution (i.e. $\int^1_{\theta=0} \theta^{\alpha - 1}(1 - \theta)^{\beta - 1}d\theta$) is $\frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}$.}
+\end{exercise}
+\begin{sol*}
+
+\end{sol*}
+
+
+
+\end{document}
