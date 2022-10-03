@@ -16,6 +16,8 @@
 \usepackage[UKenglish]{babel}
 \usepackage{multirow}
 \usepackage{enumerate}
+\usepackage{listings}
+
 \theoremstyle{plain}
 
 \renewcommand{\baselinestretch}{1,4}
@@ -143,7 +145,7 @@ P(T_1=1)&=P(T_1=1\mid D=1)P(D=1)+P(T_1=1\mid D=0)P(D=0)\\
 \item We have to compute
 \begin{align*}
 P(D=1\mid T_2=0) &= \frac{P(T_2=0\mid D=1)P(D=1)}{P(T_2=0)}\\
-&=\frac{P(T_2=0\mid D=1)P(D=1)}{P(T_2=0\mid D=1)P(D=1)+P(T_2=0\mid D=0)P(D=0)}
+&=\frac{P(T_2=0\mid D=1)P(D=1)}{P(T_2=0\mid D=1)P(D=1)+P(T_2=0\mid D=0)P(D=0)}\\
 &=\frac{0.1\times 0.2}{0.1\times 0.2 + 1\times 0.8}\\
 &=0.024
 \end{align*}
@@ -173,7 +175,84 @@ distribution. It may be useful to note that the normalising constant for
 a $\mathrm{Beta}(\alpha, \beta)$ distribution (i.e. $\int^1_{\theta=0} \theta^{\alpha - 1}(1 - \theta)^{\beta - 1}d\theta$) is $\frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}$.}
 \end{exercise}
 \begin{sol*}
+As the hint says, we first need to evaluate the posterior distribution for the proportion of children  with low  reading ability. Let $y=7$ the number of children with low reading ability and $n=29$ the number of trials. We may define a random variable $Y\sim \mathrm{Bin}(n,\theta)$, where $\theta\in\mathrm{Beta}(1,1)$. We have the likelihood 
+\begin{align*}
+P(Y=y\mid \theta) &= \binom{n}{y}\theta^y (1-\theta)^{n-y}\\
+&= \binom{29}{7}\theta^7(1-\theta)^{22}
+\end{align*}
 
+Now  we compute the posterior using Bayes' theorem.
+\begin{align*}
+P(\theta\mid Y=y)&=\frac{P(Y=y\mid\theta)P(\theta)}{P(Y=y)}\\
+&=\frac{\binom{29}{7}}{P(Y=y)}\theta^7(1-\theta)^{22}\times 1
+\end{align*}
+
+
+This means that $\theta\mid y\sim \mathrm{Beta}(8,23)$.
+
+We can deduce the value of $P(Y=y)$ from the fact that $\int_{\theta=0}^1P(\theta\mid Y=y)d\theta = 1$. We know that 
+\[
+\int_{\theta=0}^1\theta^7(1-\theta)^{22}d\theta = \frac{\Gamma(8)\Gamma(23)}{\Gamma(8 + 23)}.
+\]
+
+Recalling that $\Gamma(n)=(n-1)!$, this implies that
+\[P(Y=y) =  \frac{\Gamma(8)\Gamma(23)}{\Gamma(31)}\frac{\Gamma(30)}{\Gamma(8)\Gamma(23)}=\frac{\Gamma(30)}{\Gamma(31)}=\frac{1}{30}.\]
+
+With this information we can obtain a predictive distribution $\tilde{Y}$ using the formula from the notes. Notice that $\tilde{Y}\sim\mathrm{Bin}(10,\theta)$ and recall that $\theta\mid y\sim\mathrm{Beta}(8,23)$.
+
+\begin{align*}
+P(\tilde{Y}=\tilde{y}\mid Y = y) &= \int P(\tilde{Y}=\tilde{y}\mid \theta)P(\theta\mid y)d\theta\\
+&=C\int \theta^{\tilde{y}}(1-\theta)^{10-\tilde{y}}\theta^7(1-\theta)^{22}d\theta\\
+&=C\int \theta^{\tilde{y}+7}(1-\theta)^{32-\tilde{y}}d\theta\\
+&= C \frac{\Gamma(\tilde{y}+8)\Gamma(33-\tilde{y})}{\Gamma(41)},
+\end{align*}
+where $C=30\times \binom{29}{7}\times \binom{10}{\tilde{y}}$.
+
+\textbf{Extra:} Since there are only ten possible values of $\tilde{Y}$ I have written the following python code that checks that the values obtained define a probability distribution and computes the expected number of children with lower reading abilities.
+
+
+\lstset{language=Python,
+showstringspaces=false,
+tab=\rightarrowfill}
+\begin{lstlisting}
+from scipy.special import gamma, binom
+from math import isclose
+
+c = 30*binom(29, 7)
+
+def prob(y):
+  binomial = binom(10,y)
+  gammas = gamma(y+8)*gamma(33-y)/gamma(41)
+  p = c*binomial*gammas
+  return  p 
+
+values = range(11)
+
+def expected(values):
+  e = sum(y*prob(y) for y in values)
+  return e
+
+probs = [prob(y) for y in values]
+if all(0<=p<=1 for p in probs):
+  print("All values are valid probabilities.")
+else:
+  raise ValueError("Some values are not valid probabilities.")
+
+if isclose(sum(probs),1):
+  print("The probabilities add up to 1.")
+else:
+  raise ValueError("The probabilities don't add up to 1.")
+
+print("Expected value:",  expected(values))
+\end{lstlisting}
+
+As one can check, the output is
+\begin{verbatim}
+>>> All values are valid probabilities.
+The probabilities add up to 1.
+Expected value: 2.580645161290322
+\end{verbatim}
+So our calculations must be correct and the expected number of children with lower reading abilities in the latest trial is between 2 and 3. 
 \end{sol*}
 
 
