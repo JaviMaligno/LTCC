@@ -1,0 +1,171 @@
+\documentclass{article}
+\usepackage{amsmath,accents}%
+\usepackage{amsfonts}%
+\usepackage{amssymb}%
+\usepackage{comment}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{setspace}  
+\usepackage{amsthm}
+\usepackage{nccmath}
+\usepackage[UKenglish]{babel}
+\usepackage{multirow}
+\usepackage{enumerate}
+\usepackage{listings}
+
+\theoremstyle{plain}
+
+\renewcommand{\baselinestretch}{1,4}
+\setlength{\oddsidemargin}{0.5in}
+\setlength{\evensidemargin}{0.5in}
+\setlength{\textwidth}{5.4in}
+\setlength{\topmargin}{-0.25in}
+\setlength{\headheight}{0.5in}
+\setlength{\headsep}{0.6in}
+\setlength{\textheight}{8in}
+\setlength{\footskip}{0.75in}
+
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{propi}[theorem]{Propiedades}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{coro}[theorem]{Corolario}
+\newtheorem{criterion}{Criterion}
+\newtheorem{defi}[theorem]{Definición}
+\newtheorem{example}[theorem]{Ejemplo}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{nota}[theorem]{Nota}
+\newtheorem{sol}{Solución}
+\newtheorem*{sol*}{Solution}
+\newtheorem{prop}[theorem]{Proposición}
+\newtheorem{remark}{Remark}
+
+\newtheorem{dem}[theorem]{Demostración}
+
+\newtheorem{summary}{Summary}
+
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\ninf}[1]{\norm{#1}_\infty}
+\providecommand{\numn}[1]{\norm{#1}_1}
+\providecommand{\gabs}[1]{\left|{#1}\right|}
+\newcommand{\bor}[1]{\mathcal{B}(#1)}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\X}{\chi}
+\providecommand{\Zn}[1]{\Z / \Z #1}
+\newcommand{\resi}{\varepsilon_L}
+\newcommand{\cee}{\mathbb{C}}
+\providecommand{\conv}[1]{\overset{#1}{\longrightarrow}}
+\providecommand{\gene}[1]{\langle{#1}\rangle}
+\providecommand{\convcs}{\xrightarrow{CS}}
+% xrightarrow{d}[d]
+\setcounter{exercise}{0}
+\newcommand{\cicl}{\mathcal{C}}
+
+\newenvironment{ejercicio}[2][Estado]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries Ejercicio}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%--------------------------------------------------------
+\begin{document}
+
+\title{Applied Bayesian Methods - Week 2 Exercises}
+\author{Javier Aguilar Martín}
+\date{\today}
+\maketitle
+\begin{exercise}
+In the vicinity of a nuclear reprocessing plant, $y = 4$ cases of childhood
+leukaemia are observed as against only $C = 0.25$ expected; the expected
+count is based on the national age-specific rate of leukaemia times the population of children living near the nuclear plant. Therefore, parents living in the area are concerned that their children are at high risk of getting leukaemia.
+
+The sampling distribution for the number of cases is binomial, but since
+leukaemia is rare (so the binomial probability parameter is small) we can
+approximate this by a Poisson distribution: $Y\mid\theta ,C \sim\mathrm{Poisson}(\theta C)$, i.e.
+\[
+P(Y=y \mid \theta,C) = e^{-\theta C} \frac{(\theta C)^y}{y!}.
+\]
+Here, the mean of the Poisson distribution is given by $\theta C$, where $C$ is known and the unknown parameter $\theta$ represents the \emph{relative risk} of leukaemia for children living near the nuclear plant compared to elsewhere in the country.
+
+A frequentist carries out a maximum likelihood analysis of the data and
+obtains an estimate of the relative risk, $\hat{\theta} = \frac{y}{C} = 16$. That is, he estimates that children are 16 times more likely to develop leukaemia if they live near the nuclear plant than if they don't.
+Show how a Bayesian would analyse the evidence, assuming a $\mathrm{Gamma}(\alpha,\beta)$ prior for the relative risk $\theta$:
+
+\begin{enumerate}
+\item  First express your posterior in terms of the prior parameters $\alpha$ and $\beta$ and the data $y$ and expected count $C$ (i.e. don't substitute actual numbers yet). What is the posterior mean?
+
+\item In order to specify your prior, you start by guessing a value (call it $\mu_0$) for $\theta$ (this will give you a value for the mean of your prior distribution). You also specify a value (call it $\phi_0$) for the variance of your prior which reflects how uncertain you are about your prior guess. Re-write the expression for the posterior mean in terms of $\mu_0$ and $\phi_0$ rather than $\alpha$ and $\beta$, and hence show that the posterior mean is given by
+\[
+E(\theta) =\frac{\mu^2_0 + \phi_0y}{\mu_0 + \phi_0C}.
+\]
+Discuss briefly the interpretation of the posterior mean,
+\begin{enumerate}[(a)]
+\item if the prior variance is small (i.e. the prior represents strong beliefs about the value relative risk $\theta$);
+\item if the prior variance is large relative to the prior mean (reflecting
+considerable prior uncertainty about $\theta$);
+\item as the sample size increases (i.e. for large values of the observed
+and expected counts).
+\end{enumerate}
+\item A sensible prior guess for the relative risk is $\mu_0 = 1$ (remember, the prior is what you believe before seeing the data, and there is no prior
+reason to believe that the risk of leukaemia should be any different in this area compared to elsewhere); however, you are quite uncertain about this value, so you also specify a prior variance $\phi_0 = 1$. Using this
+prior and the observed data:
+\begin{enumerate}[(a)]
+\item Obtain the posterior distribution for the relative risk of childhood
+leukaemia around the nuclear reprocessing plant.
+\item What are the posterior mean and the posterior variance?
+\item Compare your results to those obtained by the frequentist analysis.
+\end{enumerate}
+
+\end{enumerate}
+
+\end{exercise}
+\begin{sol*}\
+\begin{enumerate}
+\item The posterior is given by Bayes' theorem as
+\begin{align*}
+P(\theta\mid y, C)&	= \frac{P(y\mid\theta, C)P(\theta\mid C)}{P(y)}\\
+&= e^{-\theta C} \frac{(\theta C)^y}{y!} \frac{ \theta^{\alpha-1} e^{-\beta \theta} \beta^\alpha}{\Gamma(\alpha)}\frac{1}{P(y)}\\
+&=e^{-\theta (\beta + C)}\theta^{\alpha+y-1}\frac{C^y \beta^\alpha}{y! \Gamma(\alpha)P(y)} 
+\end{align*}
+This means that $\theta\mid y, C\sim\Gamma(\alpha+y, \beta+C)$ (if necessary, we can compute $P(y)$ so that $\int_0^{\infty}P(\theta\mid y, C)d\theta =1$ to make all the parameters fit in the pdf of a $\mathrm{Gamma}$ distribution). Therefore, the posterior mean is
+\[E(\theta\mid y, C)=\frac{\alpha+y}{\beta+C}.\]
+\item Since the prior distribution of $\theta$ is given by a $\Gamma(\alpha,\beta)$, we have that 
+\[\mu_0 = \frac{\alpha}{\beta}\text{ and } \phi_0 = \frac{\alpha}{\beta^2}.\]
+Solving for $\beta$ we obtain $\beta = \dfrac{\mu_0}{\phi_0}$ and consequently $\alpha = \dfrac{\mu_0^2}{\phi_0}$. Substituting on $E(\theta\mid y,C)$ and multiplying denominator and numerator by $\phi_0$ we obtain
+\[
+E(\theta) =\frac{\mu^2_0 + \phi_0y}{\mu_0 + \phi_0C}.
+\]
+as desired.
+\begin{enumerate}[(a)]
+\item If the prior variance is small ($\phi_0\to 0$), then $E(\theta)\to\mu_0$, i.e., the posterior mean coincides with the prior mean. In other words, our believe about the mean is true.
+\item If the prior variance is large ($\phi_0\to\infty$), then $E(\theta)\to \dfrac{y}{C}$. So the posterior mean is precisely the frequentist estimate.
+\item As the sample size increases ($y\to\infty$) we have that $E(\theta)\to\\infty$, so the more cases we observe, the bigger the expected value of $\theta$.
+\end{enumerate}
+
+\item By the previous part, we can substitute the values of $\alpha$ and $\beta$ in terms of $\mu_0$ and $\phi_0$ so that 
+\begin{enumerate}[(a)]
+\item $\theta\mid y, C\sim\mathrm{Gamma}(1+y,1+C)=\mathrm{Gamma}(5, 1.25)$.
+\item The posterior mean and variance are then $E(\theta)=4$ and $V(\theta)=3.2$.
+\item Our results show that the risk is 4 times higher near this nuclear plant than elsewhere, although the uncertainty about this value is high due to the relatively high variance.
+\end{enumerate}
+
+\end{enumerate}
+\end{sol*}
+
+
+
+
+\end{document}
