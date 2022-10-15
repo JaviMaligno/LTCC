@@ -1,0 +1,163 @@
+\documentclass{article}
+\usepackage{amsmath,accents}%
+\usepackage{amsfonts}%
+\usepackage{amssymb}%
+\usepackage{comment}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{alphabeta}
+%\usepackage[T1,LGR]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{setspace}  
+\usepackage{amsthm}
+\usepackage{nccmath}
+\usepackage[UKenglish]{babel}
+\usepackage{multirow}
+\usepackage{enumerate}
+\usepackage{listings}
+
+\theoremstyle{plain}
+
+\renewcommand{\baselinestretch}{1,4}
+\setlength{\oddsidemargin}{0.5in}
+\setlength{\evensidemargin}{0.5in}
+\setlength{\textwidth}{5.4in}
+\setlength{\topmargin}{-0.25in}
+\setlength{\headheight}{0.5in}
+\setlength{\headsep}{0.6in}
+\setlength{\textheight}{8in}
+\setlength{\footskip}{0.75in}
+
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{propi}[theorem]{Propiedades}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{coro}[theorem]{Corolario}
+\newtheorem{criterion}{Criterion}
+\newtheorem{defi}[theorem]{Definición}
+\newtheorem{example}[theorem]{Ejemplo}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{nota}[theorem]{Nota}
+\newtheorem{sol}{Solución}
+\newtheorem*{sol*}{Solution}
+\newtheorem{prop}[theorem]{Proposición}
+\newtheorem{remark}{Remark}
+
+\newtheorem{dem}[theorem]{Demostración}
+
+\newtheorem{summary}{Summary}
+
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\ninf}[1]{\norm{#1}_\infty}
+\providecommand{\numn}[1]{\norm{#1}_1}
+\providecommand{\gabs}[1]{\left|{#1}\right|}
+\newcommand{\bor}[1]{\mathcal{B}(#1)}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\X}{\chi}
+\providecommand{\Zn}[1]{\Z / \Z #1}
+\newcommand{\resi}{\varepsilon_L}
+\newcommand{\cee}{\mathbb{C}}
+\providecommand{\conv}[1]{\overset{#1}{\longrightarrow}}
+\providecommand{\gene}[1]{\langle{#1}\rangle}
+\providecommand{\convcs}{\xrightarrow{CS}}
+% xrightarrow{d}[d]
+\setcounter{exercise}{0}
+\newcommand{\cicl}{\mathcal{C}}
+
+\newenvironment{ejercicio}[2][Estado]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries Ejercicio}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%--------------------------------------------------------
+\begin{document}
+
+\title{Applied Bayesian Methods - Week 3 Exercises}
+\author{Javier Aguilar Martín}
+\date{\today}
+\maketitle
+\begin{exercise}
+Suppose that
+$Y | θ \sim \mathrm{Normal}(θ, τ-1)$,
+where $θ$ is an unknown parameter and the value of $τ$ is known.
+\begin{enumerate}[(a)]
+\item Explain briefly what a ``natural conjugate prior'' means.
+\item List any two advantages of using conjugate priors.
+\item Show that the distribution of $Y | θ$ belongs to the one-parameter
+exponential family.
+\item Using your knowledge of the exponential family or otherwise, derive
+the conjugate prior for $θ$ and identify the mean and precision
+of $θ$ for this prior distribution.
+\item Is this prior a natural conjugate prior? Justify your answer.
+
+\end{enumerate}
+Suppose we thought that it was reasonable to use a Normal prior distribution
+for $θ$:
+
+\[θ \sim \mathrm{Normal}(μ_0, φ^{-1}_0 ) ;\]
+and we believed that there was a probability of 0.95 that the values of
+$θ$ lay symmetrically between 1 and 3.
+\begin{enumerate}
+\item[(f)] Using this information to specify values for $μ_0$ and $φ_0$.
+\item[(g)] Since then, we have collected a random sample of $n$ independent
+observations, $Y_1,\dots, Y_n$, of $Y$. Let $y = (y_1, \dots , y_n)$ denote the values of these observations, and $\bar{y} = \frac{1}{n}Σ^n_{i=1} y_i$ denote the sample mean. Derive the posterior distribution of $θ$.
+\item[(h)] Given $n = 10$, $\bar{y} = 2.5$ and $τ = 1$, calculate the 95\% posterior central credible interval of $θ$.
+\item[(i)] Comment briefly on the change in our belief, before and after we
+see the data $y$, about the mean and variance of $θ$.
+\end{enumerate}
+ 
+
+\end{exercise}
+\begin{sol*}\
+\begin{enumerate}[(a)]
+\item A \emph{natural conjugate prior} is a conjugate prior that also belongs to the same class as the likelihood as a function of $\theta$.
+\item They are convenient for calculations and ensure that the posterior follows a known parametric form. 
+\item Since $Y\mid\theta\sim\mathrm{Normal}(\theta,\tau-1)$, it has a density  $\phi$ given by
+\[
+\phi(y)=\frac{1}{(\tau-1)\sqrt{2\pi}}e^{-\frac{1}{2}(\frac{y-\theta}{\tau-1})^2}.
+\]
+The trick here is considering functions from higher dimensional spaces and using dot product. More precisely, $h(\theta)=(\frac{\theta}{\tau-1},-\frac{1}{2(\tau-1)^2})$, $t(y)=(y,y^2)$, $f(y)=\frac{1}{\sqrt{2\pi}}$ and $g(\theta)= e^{-\frac{\theta^2}{2(\tau-1)^2}}+\frac{1}{\tau-1}$.
+\end{enumerate}
+\end{sol*}
+
+\begin{exercise}
+Suppose $Y \sim \mathrm{Normal}(θ, τ-1)$ where $θ$ is known and $τ$ is unknown.
+\begin{enumerate}[(a)]
+\item Show that this likelihood belongs to a one-parameter exponential
+family.
+\item Find the conjugate prior family for $τ$.
+\end{enumerate}
+\end{exercise}
+
+
+
+\begin{exercise}
+
+The Negative Binomial distribution, $\mathrm{NegBin}(r, θ)$, describes the distribution of the number of failures before the $r$-th success in an experiment that consists of a sequence of independent and identically distributed (i.i.d.) Bernoulli trials, where each trial has a probability $θ$ of success. It has probability mass function
+\[p(Y = y | θ) =\binom{y + r - 1}{y}θ^r(1 - θ)^y ,\ y = 0, 1, 2, \dots ,\]
+with mean $\frac{r(1-θ)}{θ}$. Now suppose that $Y \sim \mathrm{NegBin}(r, θ)$, where $θ$ is unknown and the value of $r$ is known.
+\begin{enumerate}[(a)]
+\item Derive Jeffreys’ prior for $θ$. Show that it can be written as a Beta
+distribution.
+\item Is this Jeffreys’ prior proper? Justify briefly your answer.
+\item Suppose that we carry out independently the experiment for $n$
+times, and each time the value of $Y$ is recorded as $y_i$, $i = 1, \dots , n$. Let $y$ denote the values $(y_1, \dots , y_n)$ of the sample and $\bar{y}$ denote the sample mean $\bar{y} = \frac{1}{n}Σ^n_{i=1} y_i$. Using Jeffreys’ prior from (3a) and this sample, show that the posterior distribution of $θ$ is a Beta distribution. 
+\end{enumerate}
+\end{exercise}
+\begin{sol*}\
+
+\end{sol*}
+\end{document}
