@@ -91,7 +91,7 @@
 \maketitle
 \begin{exercise}
 Suppose that
-$Y | θ \sim \mathrm{Normal}(θ, τ-1)$,
+$Y | θ \sim \mathrm{Normal}(θ, τ^{-1})$,
 where $θ$ is an unknown parameter and the value of $τ$ is known.
 \begin{enumerate}[(a)]
 \item Explain briefly what a ``natural conjugate prior'' means.
@@ -125,23 +125,77 @@ see the data $y$, about the mean and variance of $θ$.
 \begin{enumerate}[(a)]
 \item A \emph{natural conjugate prior} is a conjugate prior that also belongs to the same class as the likelihood as a function of $\theta$.
 \item They are convenient for calculations and ensure that the posterior follows a known parametric form. 
-\item Since $Y\mid\theta\sim\mathrm{Normal}(\theta,\tau-1)$, it has a density  $\phi$ given by
+\item Since $Y\mid\theta\sim\mathrm{Normal}(\theta,\tau^{-1})$, it has a density $\phi$ given by
 \[
-\phi(y)=\frac{1}{(\tau-1)\sqrt{2\pi}}e^{-\frac{1}{2}(\frac{y-\theta}{\tau-1})^2}.
+\phi(y)=\sqrt{\frac{\tau}{2\pi}}e^{-\frac{\tau}{2}(y-\theta)^2}.
 \]
-The trick here is considering functions from higher dimensional spaces and using dot product. More precisely, $h(\theta)=(\frac{\theta}{\tau-1},-\frac{1}{2(\tau-1)^2})$, $t(y)=(y,y^2)$, $f(y)=\frac{1}{\sqrt{2\pi}}$ and $g(\theta)= e^{-\frac{\theta^2}{2(\tau-1)^2}}+\frac{1}{\tau-1}$.
+%The trick here is considering functions from higher dimensional spaces and using dot product. More precisely, $h(\theta)=(\frac{\theta}{\tau-1},-\frac{1}{2(\tau-1)^2})$, $t(y)=(y,y^2)$, $f(y)=\frac{1}{\sqrt{2\pi}}$ and $g(\theta)= e^{-\frac{\theta^2}{2(\tau-1)^2}}+\frac{1}{\tau-1}$.
+Therefore it can be easily checked that we may choose  
+\[f(y)=\sqrt{\frac{\tau}{2\pi}}e^{\frac{-y^2\tau}{2}},\ t(y)=y\sqrt{\tau},\ g(\theta)=e^{-\theta^2\tau},\ h(\theta)=\theta\sqrt{\tau}.\]
+
+\item Using our knowledge of the exponential family we know that 
+\begin{align*}
+p(\theta) & \propto g(\theta)^\nu e^{h(\theta)\delta}\\
+& = e^{-\theta^2\tau\nu}e^{\theta\sqrt{\tau}\delta}\\
+& =  e^{-\theta^2\tau\nu+\theta\sqrt{\tau}\delta}\\
+& = e^{-\tau\nu(\theta-\frac{\delta}{2\sqrt{\tau}})^2+\frac{\delta^2}{4\tau}}\\
+& \propto e^{-\tau\nu(\theta-\frac{\delta}{2\sqrt{\tau}})^2}.
+\end{align*}
+Therefore, we see that $\theta\sim\mathrm{Normal}(\mu_0,\varphi_0^{-1})$, where the mean is $\mu_0=\frac{\delta}{2\sqrt{\tau}}$ and the precision is $\varphi_0=2\tau\nu$.
+
+\item The conjugate prior is natural because is normal, just like the likelihood.
+
+\item  Since the normal distribution is  symmetric, we have that $\mu_0=2$. To obtain $\varphi_0$ we use that $P(1<\theta< 3) = 0.95$. After normalizing we get
+\[P(-\sqrt{\varphi_0}<\sqrt{\varphi_0}(X-\mu_0)<\sqrt{\varphi
+_0})=0.95.\]
+By symmetry of the standard normal distrirbution, this is equivalent to
+\[1-\Phi(\sqrt{\varphi_0)}=0.025,\]
+where $\Phi$ is the CDF of the standard normal distribution. Using the inverse of $\Phi$ (i.e. using the quantile function) we may deduce that
+\[\varphi_0 \approx (1.96)^2\approx 3.84.\]
+\item Using our knowledge of the exponential family, we have a posterior distribution
+\begin{align*}
+P(\theta\mid y) &\propto g(\theta)^{n+\nu}e^{h(\theta)(\sum t(y_i)+\delta)}\\
+& = e^{-\theta^2\tau(n+\nu)}e^{\theta\sqrt{\tau}(\sum y_i\sqrt{\tau}+\delta)}.
+\end{align*}
+Following the same procedure as in (d), this distribution is again normal with mean $\mu_1=\frac{n\bar{y}\sqrt{\tau}+\delta}{2\sqrt{\tau}}$ and precision $\varphi_1 = 2\tau(n+\nu)$. Now, since the prior is $\mathrm{Normal}(\mu_0,\varphi_0^{-1}$), we can deduce the values of $\nu$ and $\delta$. By (d) and (f) we have
+\[\mu_0 = \frac{\delta}{2\sqrt{\tau}}=2\text{ and }\varphi_0 = 2\tau\nu=3.84,\]
+so we obtain after substituting $\tau=1$ that 
+\[\delta = 4\text{ and }\nu = 1.92.\]
+Finally, substituting $n=10$ and $\bar{y}=2.5$ we obtain
+\[
+\mu_1 = 14.5\text{ and }\phi_1 = 23.84.
+\]
+\begin{remark}
+The result for the mean is unexpected, it should be closer to 2.5, but I can't find a mistake in my calculations. I've also tried alternative methods and I arrived similar conclusions.
+\end{remark}
+
+With this information we can compute the 95\% posterior credible interval using the quantile function $\Phi$, which gives $[4.93,24.06]$.
+
+\item A new observation changes our belief about $\theta$. It incrases the precision and it should bring the mean closer to the sample mean (even though in this case we may have made some mistake).   
 \end{enumerate}
+
 \end{sol*}
 
 \begin{exercise}
-Suppose $Y \sim \mathrm{Normal}(θ, τ-1)$ where $θ$ is known and $τ$ is unknown.
+Suppose $Y \sim \mathrm{Normal}(θ, τ^{-1})$ where $θ$ is known and $τ$ is unknown.
 \begin{enumerate}[(a)]
 \item Show that this likelihood belongs to a one-parameter exponential
 family.
 \item Find the conjugate prior family for $τ$.
 \end{enumerate}
 \end{exercise}
-
+\begin{sol*}\
+\begin{enumerate}[(a)]
+\item It is enough to show that the density belongs to a one-parameter exponential family since the product of functions of this class also belongs to the class. To show that it is enought to take
+\[f(y) = \frac{1}{\sqrt{2\pi}},\ t(y)=(y-\theta)^2,\ g(\tau)=\sqrt{\tau},\ h(\tau)=-\frac{\tau}{2}.\]
+\item The conjugate prior family is the class of functions of the form
+\begin{align*}
+P(\tau)& \propto g(\tau)^\nu e^{h(\tau)\delta}\\
+& = \sqrt{\tau}^\nu e^{-\frac{\tau\delta}{2}}.
+\end{align*}
+So $\tau\sim\mathrm{Gamma}(\nu/2 +1, \frac{\delta}{2})$.
+\end{enumerate}
+\end{sol*}
 
 
 \begin{exercise}
@@ -158,6 +212,33 @@ times, and each time the value of $Y$ is recorded as $y_i$, $i = 1, \dots , n$. 
 \end{enumerate}
 \end{exercise}
 \begin{sol*}\
+\begin{enumerate}[(a)]
+\item Let us compute some logarithms and derivatives first.
+\begin{align*}
+\log P(Y\mid\theta) &= \log\binom{y+r-1}{y}+r\log\theta+y\log(1-\theta)\\
+\frac{\partial}{\partial\theta}\log P(Y\mid\theta)&= \frac{r}{\theta}-\frac{y}{1-\theta}\\
+\frac{\partial^2}{\partial\theta^2}\log P(Y\mid\theta)&=-\frac{r}{\theta^2}-\frac{y}{(1-\theta)^2}.
+\end{align*}
 
+By definition of Fisher information we have
+\begin{align*}
+I(\theta) &= -E_{Y\mid\theta}\left(\frac{\partial^2}{\partial\theta^2}\log P(Y\mid\theta)\right)\\
+&= -E\left(-\frac{Y}{(1-\theta)^2}\right)\\
+&= \frac{r}{\theta^2} +\frac{E(Y)}{(1-\theta)^2}\\
+&= \frac{r}{\theta^2}+\frac{r}{\theta(1-\theta)}\\
+&= \frac{r}{\theta^2(1-\theta)}\\
+&\propto \theta^{-2}(1-\theta)^{-1}.
+\end{align*}
+This implies that Jeffrey's prior is
+\[I(\theta)^{\frac{1}{2}} \propto \theta^{-1}(1-\theta)^{-\frac{1}{2},}\] so it can  be written as a $\mathrm{Beta}(0,\frac{1}{2})$.
+\item The Jeffrey's prior is improper in this case because $\mathrm{Beta}(\alpha,\beta)$ is proper only when $\alpha,\beta>0$.
+\item We have by Bayes' Theorem that
+\begin{align*}
+P(\theta\mid y) &\propto P(y\mid \theta)P(\theta)\\
+&\propto \theta^{nr}(1-\theta)^{n\bar{y}}\theta^{-1}(1-\theta)^{-\frac{1}{2}}\\
+& = \theta^{nr-1}(1-\theta)^{n\bar{y}-\frac{1}{2}},
+\end{align*}
+so $\theta\mid y\sim \mathrm{Beta}(nr, n\bar{y}+\frac{1}{2})$. 
+\end{enumerate}
 \end{sol*}
 \end{document}
