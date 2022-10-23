@@ -1,0 +1,193 @@
+\documentclass{article}
+\usepackage{amsmath,accents}%
+\usepackage{amsfonts}%
+\usepackage{amssymb}%
+\usepackage{comment}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{alphabeta}
+%\usepackage[T1,LGR]{fontenc}
+%\usepackage{hyperref}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{setspace}  
+\usepackage{amsthm}
+\usepackage{nccmath}
+\usepackage[UKenglish]{babel}
+\usepackage{multirow}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{tkz-graph}  
+    \usetikzlibrary{shapes.geometric}%  
+    
+\theoremstyle{plain}
+
+\renewcommand{\baselinestretch}{1,4}
+\setlength{\oddsidemargin}{0.5in}
+\setlength{\evensidemargin}{0.5in}
+\setlength{\textwidth}{5.4in}
+\setlength{\topmargin}{-0.25in}
+\setlength{\headheight}{0.5in}
+\setlength{\headsep}{0.6in}
+\setlength{\textheight}{8in}
+\setlength{\footskip}{0.75in}
+
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{propi}[theorem]{Propiedades}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{coro}[theorem]{Corolario}
+\newtheorem{criterion}{Criterion}
+\newtheorem{defi}[theorem]{Definición}
+\newtheorem{example}[theorem]{Ejemplo}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{nota}[theorem]{Nota}
+\newtheorem{sol}{Solución}
+\newtheorem*{sol*}{Solution}
+\newtheorem{prop}[theorem]{Proposición}
+\newtheorem{remark}{Remark}
+
+\newtheorem{dem}[theorem]{Demostración}
+
+\newtheorem{summary}{Summary}
+
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\ninf}[1]{\norm{#1}_\infty}
+\providecommand{\numn}[1]{\norm{#1}_1}
+\providecommand{\gabs}[1]{\left|{#1}\right|}
+\newcommand{\bor}[1]{\mathcal{B}(#1)}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\X}{\chi}
+\providecommand{\Zn}[1]{\Z / \Z #1}
+\newcommand{\resi}{\varepsilon_L}
+\newcommand{\cee}{\mathbb{C}}
+\providecommand{\conv}[1]{\overset{#1}{\longrightarrow}}
+\providecommand{\gene}[1]{\langle{#1}\rangle}
+\providecommand{\convcs}{\xrightarrow{CS}}
+% xrightarrow{d}[d]
+\setcounter{exercise}{0}
+\newcommand{\cicl}{\mathcal{C}}
+
+\newenvironment{ejercicio}[2][Estado]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries Ejercicio}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%--------------------------------------------------------
+\begin{document}
+
+\title{Applied Bayesian Methods - Week 3 Exercises}
+\author{Javier Aguilar Martín}
+\date{\today}
+\maketitle
+\begin{exercise}
+Construct a DAG to represent the following joint probability distribution:
+\[p(A,B,C,D,E, F) = p(A)p(B)p(C|A,B)p(D|B)p(E|B,C,D)p(F|C,E).\]
+\end{exercise}
+\begin{sol*}\
+
+ \tikzstyle{VertexStyle} = [shape            = circle,
+                               minimum width    = 6ex,%
+                               draw]
+
+    \tikzstyle{EdgeStyle}   = [->,>=stealth']      
+
+    \begin{tikzpicture}[scale=1.5] 
+    \SetGraphUnit{3} 
+    \Vertex{A}  
+  	\SO(A){B}\EA(A){C}\EA(B){D}\EA(C){E}\EA(D){F}
+  	\Edges(A,C, E, F) \Edges(C,F) \Edges(B,D,E) \Edges(B,C)\Edges(B,E)
+    \end{tikzpicture}
+\end{sol*}
+
+\begin{exercise}
+Considering the following hierarchical model:
+
+\begin{align*}
+Y_i \mid \theta_i &\sim \mathrm{NegBin}(r,\theta_i),& i = 1, 2\\
+\theta_i\mid \alpha,\beta & \sim \mathrm{Beta}(\alpha,\beta), & i=1,2\\
+\alpha &\sim \mathrm{Exponential}(0.01)& \\
+\beta & \sim \mathrm{Exponential}(0.01) &
+\end{align*}
+where $r$ is a constant; $\alpha$; $\alpha$, $\beta$, $\theta_1$ and $\theta_2$ are unobserved random variables; the observed values of $Y_1$ and $Y_2$ are $y_1$ and $y_2$, respectively.
+\begin{enumerate}[(a)]
+\item Draw the DAG for this model.
+\item Show that the full-conditional distribution of $\theta_1$ is a Beta distribution.
+\item Suppose that you have worked out the full-conditional distributions
+of all four unobserved random variables $\alpha$, $\beta$, $\theta
+_1$ and $\theta_2$. Explain in detail how to use these distributions in the Gibbs sampler to obtain a sample from the posterior distribution $p(\theta_2 \mid y)$.
+\end{enumerate}
+The Negative Binomial distribution, $\mathrm{NegBin}(r,\theta)$, has probability mass function
+\[p(Y = y \mid \theta) = \binom{y + r - 1}{y}\theta^r(1 - \theta)^y,\ y = 0, 1, 2, \dots\]
+
+\end{exercise}
+\begin{sol*}\
+\begin{enumerate}[(a)]
+\item The DAG looks as follows.
+
+\begin{tikzpicture}[scale=2,line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+\clip(0.02333333333333283,0.1) rectangle (3.854444444444445,3.0333333333333274);
+\draw(1.6188888888888886,0.8777777777777761) -- (1.014444444444444,0.8822222222222205) -- (1.01,0.2777777777777763) -- (1.6144444444444441,0.2733333333333318) -- cycle;
+\draw(2.6,2.) -- (0.8,2.) -- (0.8,0.2) -- (2.6,0.2) -- cycle;
+\draw(2.3877777777777776,0.8733333333333316) -- (1.81,0.8688888888888888) -- (1.8144444444444425,0.2911111111111115) -- (2.39222222222222,0.29555555555555396) -- cycle;
+\draw(1.3744444444444446,2.5933333333333293) circle (0.3340529269811789cm);
+\draw(2.174444444444444,2.5933333333333293) circle (0.3489048120924053cm);
+\draw(1.2277777777777774,1.602222222222219) circle (0.26666666666666655cm);
+\draw (1.6188888888888886,0.8777777777777761)-- (1.014444444444444,0.8822222222222205);
+\draw (1.014444444444444,0.8822222222222205)-- (1.01,0.2777777777777763);
+\draw (1.01,0.2777777777777763)-- (1.6144444444444441,0.2733333333333318);
+\draw (1.6144444444444441,0.2733333333333318)-- (1.6188888888888886,0.8777777777777761);
+\draw (2.6,2.)-- (0.8,2.);
+\draw (0.8,2.)-- (0.8,0.2);
+\draw (0.8,0.2)-- (2.6,0.2);
+\draw (2.6,0.2)-- (2.6,2.);
+\draw [->] (1.348212114330385,2.26031197834017) -- (1.1655555555555552,1.8555555555555518);
+\draw [->] (2.0448944571415244,2.269371346842553) -- (1.29,1.8644444444444408);
+\draw [->] (1.2470509139320365,1.336252943293448) -- (1.2749419568822549,0.8803067993366483);
+\draw (1.25,2.7) node[anchor=north west] {$\alpha$};
+\draw (2.081111111111111,2.753333333333328) node[anchor=north west] {$\beta$};
+\draw (1.094444444444444,1.7666666666666633) node[anchor=north west] {$\theta_1$};
+\draw(2.2,1.6) circle (0.25706078447242453cm);
+\draw (2.3877777777777776,0.8733333333333316)-- (1.81,0.8688888888888888);
+\draw (1.81,0.8688888888888888)-- (1.8144444444444425,0.2911111111111115);
+\draw (1.8144444444444425,0.2911111111111115)-- (2.39222222222222,0.29555555555555396);
+\draw (2.39222222222222,0.29555555555555396)-- (2.3877777777777776,0.8733333333333316);
+\draw [->] (2.183270705901152,1.3434841571510008) -- (2.1166666666666667,0.8866666666666649);
+\draw [->] (1.5309491192558253,2.2982102322604434) -- (2.018230576122415,1.781769423877585);
+\draw [->] (2.206032801905055,2.245861401266612) -- (2.227777777777778,1.8555555555555518);
+\draw (2.09,1.775555555555552) node[anchor=north west] {$\theta_2$};
+\draw (1.1566666666666663,0.7222222222222208) node[anchor=north west] {$Y_1$};
+\draw (2.0233333333333334,0.7044444444444431) node[anchor=north west] {$Y_2$};
+\end{tikzpicture}
+\item The full conditional distribution of $\theta_1$ is
+\begin{align*}
+p(\theta_1\mid Y_1,Y_2,\theta_2,\alpha,\beta)&=p(\theta_1\mid \alpha,\beta)p(Y_1\mid \theta_1)\\
+&\propto \theta_1^{\alpha-1}(1-\theta_1)^{\beta-1}\theta^r(1-\theta)^{y_1}\\
+&=\theta_1^{\alpha+r-1}(1-\theta_1)^{\beta+y_1-1}.
+\end{align*}
+So the full conditional distribution of $\theta_1$ is a $\mathrm{Beta}(\alpha+r-1,\beta+y_1-1)$.
+\item This is not in the lecture notes. An explanation in general can be found in \href{https://en.wikipedia.org/wiki/Gibbs_sampling#Implementation}{Wikipedia}.
+\end{enumerate}
+\end{sol*}
+
+
+
+
+\end{document}
