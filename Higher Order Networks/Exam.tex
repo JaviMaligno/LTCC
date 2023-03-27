@@ -1,0 +1,188 @@
+\documentclass{article}
+\usepackage{amsmath,accents}%
+\usepackage{amsfonts}%
+\usepackage{amssymb}%
+\usepackage{comment}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{setspace}  
+\usepackage{amsthm}
+\usepackage{nccmath}
+\usepackage[UKenglish]{babel}
+\usepackage{multirow}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{pgf,tikz}
+\usetikzlibrary{arrows}
+\theoremstyle{plain}
+
+\renewcommand{\baselinestretch}{1,4}
+\setlength{\oddsidemargin}{0.5in}
+\setlength{\evensidemargin}{0.5in}
+\setlength{\textwidth}{5.4in}
+\setlength{\topmargin}{-0.25in}
+\setlength{\headheight}{0.5in}
+\setlength{\headsep}{0.6in}
+\setlength{\textheight}{8in}
+\setlength{\footskip}{0.75in}
+
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}{Case}
+\newtheorem{claim}{Claim}
+\newtheorem{propi}[theorem]{Propiedades}
+\newtheorem{condition}{Condition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{coro}[theorem]{Corolario}
+\newtheorem{criterion}{Criterion}
+\newtheorem{defi}[theorem]{Definición}
+\newtheorem{example}[theorem]{Ejemplo}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{nota}[theorem]{Nota}
+\newtheorem{sol}{Solución}
+\newtheorem*{sol*}{Solution}
+\newtheorem{prop}[theorem]{Proposición}
+\newtheorem{remark}{Remark}
+
+\newtheorem{dem}[theorem]{Demostración}
+
+\newtheorem{summary}{Summary}
+
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\ninf}[1]{\norm{#1}_\infty}
+\providecommand{\numn}[1]{\norm{#1}_1}
+\providecommand{\gabs}[1]{\left|{#1}\right|}
+\newcommand{\bor}[1]{\mathcal{B}(#1)}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\X}{\chi}
+\providecommand{\Zn}[1]{\Z / \Z #1}
+\newcommand{\resi}{\varepsilon_L}
+\newcommand{\cee}{\mathbb{C}}
+\providecommand{\conv}[1]{\overset{#1}{\longrightarrow}}
+\providecommand{\gene}[1]{\langle{#1}\rangle}
+\providecommand{\convcs}{\xrightarrow{CS}}
+% xrightarrow{d}[d]
+\setcounter{exercise}{0}
+\newcommand{\cicl}{\mathcal{C}}
+
+\newenvironment{ejercicio}[2][Estado]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries Ejercicio}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%--------------------------------------------------------
+\begin{document}
+
+\title{Higher Order Networks Exam}
+\author{Javier Aguilar Martín}
+\date{\today}
+\maketitle
+\begin{exercise}
+\end{exercise}
+\begin{sol*}
+(d) two.
+\end{sol*}
+
+\begin{exercise}
+\end{exercise}
+\begin{sol*}
+(b) that any simplicial complex is closed under the inclusion of the faces
+of each simplex.
+\end{sol*}
+
+\begin{exercise}
+\end{exercise}
+\begin{sol*}
+(a) a dynamical variable that can be associated to nodes, links, or even
+higher dimensional simplices.
+\end{sol*}
+
+\begin{exercise}
+\end{exercise}
+\begin{sol*}
+(b) that every link is incident to at most two triangles.
+\end{sol*}
+
+
+\begin{exercise}
+\end{exercise}
+\begin{sol*}
+The following simplicial complex has dimension 2, 10 verticies, 2 connected components and 1 cycle, as required. 
+
+\definecolor{uuuuuu}{rgb}{0.26666666666666666,0.26666666666666666,0.26666666666666666}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+\clip(0,0) rectangle (12,5);
+\draw[fill=black,fill opacity=0.10000000149011612] (1.,1.) -- (4.,1.) -- (4.,4.) -- (1.,4.) -- cycle;
+\draw(8.,1.) -- (10.,1.) -- (11.,2.7320508075688776) -- (10.,4.464101615137755) -- (8.,4.464101615137755) -- (7.,2.732050807568879) -- cycle;
+\draw (1.,1.)-- (4.,1.);
+\draw (4.,1.)-- (4.,4.);
+\draw (4.,4.)-- (1.,4.);
+\draw (1.,4.)-- (1.,1.);
+\draw (8.,1.)-- (10.,1.);
+\draw (10.,1.)-- (11.,2.7320508075688776);
+\draw (11.,2.7320508075688776)-- (10.,4.464101615137755);
+\draw (10.,4.464101615137755)-- (8.,4.464101615137755);
+\draw (8.,4.464101615137755)-- (7.,2.732050807568879);
+\draw (7.,2.732050807568879)-- (8.,1.);
+\draw (1.,4.)-- (4.,1.);
+\begin{scriptsize}
+\draw [fill=black] (1.,1.) circle (2.5pt);
+\draw[color=black] (1.1,1.2466666666666655) node {$A$};
+\draw [fill=black] (4.,1.) circle (2.5pt);
+\draw[color=black] (4.1,1.2466666666666655) node {$B$};
+\draw [fill=uuuuuu] (4.,4.) circle (2.5pt);
+\draw[color=uuuuuu] (4.1,4.246666666666666) node {$C$};
+\draw [fill=uuuuuu] (1.,4.) circle (2.5pt);
+\draw[color=uuuuuu] (1.1,4.246666666666666) node {$D$};
+\draw [fill=black] (8.,1.) circle (2.5pt);
+\draw[color=black] (8.1,1.2466666666666655) node {$E$};
+\draw [fill=black] (10.,1.) circle (2.5pt);
+\draw[color=black] (10.1,1.2466666666666655) node {$F$};
+\draw [fill=uuuuuu] (11.,2.7320508075688776) circle (2.5pt);
+\draw[color=uuuuuu] (11.1,2.98) node {$G$};
+\draw [fill=uuuuuu] (10.,4.464101615137755) circle (2.5pt);
+\draw[color=uuuuuu] (10.1,4.713333333333333) node {$H$};
+\draw [fill=uuuuuu] (8.,4.464101615137755) circle (2.5pt);
+\draw[color=uuuuuu] (8.1,4.713333333333333) node {$I$};
+\draw [fill=uuuuuu] (7.,2.732050807568879) circle (2.5pt);
+\draw[color=uuuuuu] (7.1,2.98) node {$J$};
+\end{scriptsize}
+\end{tikzpicture}
+
+The simplices are
+\begin{gather*}
+\{[A],[B],[C],[D],[E],[F],[G],[H],[I],[J],\\
+[A,B], [B,C], [C,D], [D,A],[B,D], [E,F], [F,G], [G,H], [H,I], [I,J], [J,E],\\
+[A,B,D], [B,C,D]
+ \}
+\end{gather*}
+\end{sol*}
+
+\begin{exercise}
+\end{exercise}
+\begin{sol*}
+
+\end{sol*}
+
+\begin{exercise}
+\end{exercise}
+\begin{sol*}
+
+\end{sol*}
+
+
+
+
+
+\end{document}
