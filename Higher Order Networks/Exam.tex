@@ -171,13 +171,116 @@ The simplices are
 
 \begin{exercise}
 \end{exercise}
-\begin{sol*}
-
+\begin{sol*}\
+\begin{enumerate}[(a)]
+\item By looking at the adjacenty of the simplices we obtain.
+\[
+\mathbf{B}_{[1]} = \begin{matrix}
+  & [1, 2] &   [1, 3] &    [2, 3] &    [2, 4] &   [3, 4] \\
+[1]&  -1     &    -1     &     0     &    0     &    0   \\
+[2]&   1     &     0     &    -1     &   -1     &    0   \\
+[3]&   0     &     1     &     1     &    0     &   -1   \\
+[4]&   0     &     0     &     0     &    1     &    1
+\end{matrix},\ \
+\mathbf{B}_{[2]} = \begin{matrix}
+   & [1, 2, 3] \\
+[1,2]&   1     \\
+[1,3]&  -1     \\
+[2,3]&   1     \\
+[2,4]&   0     \\
+[3,4]&   0      
+\end{matrix}
+\]
+Recalling that $\mathbf{L}_{[0]} = \mathbf{B}_{[1]}\mathbf{B}_{[1]}^{\top}$, $\mathbf{L}_{[1]}^{down}=\mathbf{B}_{[1]}^{\top}\mathbf{B}_{[1]}$, $\mathbf{L}_{[1]}^{up}=\mathbf{B}_{[2]}\mathbf{B}_{[2]}^{\top}$ and $\mathbf{L}_{[2]}=\mathbf{B}_{[2]}^{\top}\mathbf{B}_{[2]}$ we obtain
+\[
+\mathbf{L}_{[0]} = \begin{matrix}
+  & [1] &   [2] &    [3] &    [4] \\
+[1]&  2     &    -1     &     -1     &    0      \\
+[2]&   -1     &     3     &    -1     &   -1      \\
+[3]&   -     &     -1     &     3     &    -1       \\
+[4]&   0     &      -1    &     -1     &    2   
+\end{matrix},\]
+\[
+ \mathbf{L}_{[1]}^{down} = \begin{matrix}
+  & [1, 2] &   [1, 3] &    [2, 3] &    [2, 4] &   [3, 4] \\
+[1,2]&  2     &    1     &     -1    &    -1     &    0   \\
+[1,3]&   1     &     2    &    1     &   0     &    -1   \\
+[2,3]&   -1    &     1     &     2     &    1     &   -1   \\
+[2, 4]&   -1     &     0     &     1    &    2     &    1\\
+[3, 4]&   0     &     -1     &     -1     &    1     &    2
+\end{matrix},\ \
+\mathbf{L}_{[1]}^{up} = \begin{matrix}
+  & [1, 2] &   [1, 3] &    [2, 3] &    [2, 4] &   [3, 4] \\
+[1,2]&  1     &    -1     &     1    &    0     &    0   \\
+[1,3]&   -1     &    1   &    -1     &   0     &    0   \\
+[2,3]&   1    &     -1     &     1     &    0     &   0   \\
+[2, 4]&   0    &     0     &     0   &    0     &    0\\
+[3, 4]&   0     &     0    &    0     &    0     &    0
+\end{matrix}
+\]
+\[
+\mathbf{L}_{[2]}=\begin{matrix}
+& [1,2,3]\\
+[1,2,3] & 3
+\end{matrix}
+\]
+\item According to the order of the simplices that we have used for the matrices, $f$ can be represented in coordinates as the vector $(1, -1,1,0,0)$. Clearly, this is in the image of $\mathbf{B}_{[2]}^{\top}$, so the cochain represents a gradient flow.
+\end{enumerate}
 \end{sol*}
 
 \begin{exercise}
 \end{exercise}
 \begin{sol*}
+The spectral gap, or Fiedler eigenvalue $\mu_F$, is the smallest non-zero eigenvalue of a graph Laplacian matrix (applicable to any order and to up and down Laplacians). 
+
+If the density of eigenvalues $\rho(\lambda)$ scales like
+\[
+\rho(\lambda)\sim \lambda^{d_S/2 -1 }
+\]
+for $\lambda <<1$ we call $d_S$ the spectral dimension.
+
+These two spectral properties are related in the following way. The Fiedler eigenvalue of a connected network with spectral dimension
+can be estimated from
+\[
+\int_{\lambda<\mu_F}
+\rho(\lambda)d\lambda = \frac{1}{N}.
+\]
+Assuming $\rho(\lambda) \propto \lambda^{d_S/2 - 1}$ we get
+\[
+\mu_F \propto N^{-2/d_S}
+\]
+Therefore the spectral gap closes, i.e. $\mu_F\to 0$, as $N \to \infty$. 
+
+However, there are differences between these spectral properties.
+
+
+
+
+
+On a graph, if there is a spectral gap,
+the characteristic temporal scale for the relaxation
+to equilibrium is given by 
+\[\tau = 1/\mu_F.\]
+
+More generally, in presence of a spectral gap
+in the spectrum of $\mathbf{L}^{down}_{[n]}$ and of $\mathbf{L}^{up}_{[n]}$
+the irrotational and the solenoidal components
+relax to the steady state with characteristic scale
+correspondingly are
+
+\[\tau^{[1]} = 1/\mu^{down}_F ,\ \tau^{[2]} = 1/\mu^{up}_F.\] 
+
+
+On the other had, assuming that the network has a spectral
+dimension the relaxation is power-law
+rather than exponential
+\[
+p(t) \propto t^{-d_S/2}.
+\]
+Additionally, the synchronized phase is not
+thermodynamically achieved
+for networks with spectral dimension $d_S\leq 4$.
+
 
 \end{sol*}
 
